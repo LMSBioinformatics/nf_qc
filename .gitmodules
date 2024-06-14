@@ -1,0 +1,6 @@
+[submodule "modules/utils"]
+	path = modules/utils
+	url = git@github.com:LMSBioinformatics/nf_mod_utils.git
+[submodule "modules/fastqc"]
+	path = modules/fastqc
+	url = git@github.com:LMSBioinformatics/nf_mod_fastqc.git
