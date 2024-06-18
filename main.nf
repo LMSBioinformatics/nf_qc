@@ -8,16 +8,18 @@
 
 import static groovy.json.JsonOutput.*
 
+include {module_info; find_samples; count_reads} from './modules/utils'
+include {fastqc} from './modules/fastqc'
+
 // Compile and present help text if requested
 if (params.containsKey('help')) {
-    include {module_info} from './modules/utils'
     params._submodules
         .each { module_info(it, show_all=true) }
     exit 0
 }
 
 // Ensure required arguments are present
-params.required_arguments
+params._required_arguments
     .each{
         if (! params.containsKey(it)) {
             exit 1, "Required parameter missing: ${it}!"
@@ -26,18 +28,14 @@ params.required_arguments
 
 // println prettyPrint(toJson(params))
 
-// Scrape the sample names and file paths
-// include {find_samples} from './modules/utils'
-// samples = find_samples(params.run_dir)
-
 workflow {
 
-    // Determine the sequencing depth for each sample
-    include {find_samples; count_reads} from './modules/utils'
+    // Scrape the sample names and file paths, determine the sequencing depth
+    samples = find_samples(params.run_dir)
     samples =
-        find_samples(params.run_dir)
+        samples
             .join(count_reads(samples))
 
-    samples.view()
+    fastqc(samples)
 
 }
