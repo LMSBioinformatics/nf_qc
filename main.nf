@@ -34,8 +34,7 @@ workflow {
     // Scrape the sample names and file paths, determine the sequencing depth
     samples = find_samples(params.run_dir)
     samples =
-        samples
-            .join(count_reads(samples))
+        samples.join(count_reads(samples).map { [it[0], it[1].toInteger()] })
 
     fastqc(samples)
     sourmash_gather(samples)
