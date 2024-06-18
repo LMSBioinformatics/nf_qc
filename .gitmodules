@@ -4,3 +4,6 @@
 [submodule "modules/fastqc"]
 	path = modules/fastqc
 	url = git@github.com:LMSBioinformatics/nf_mod_fastqc.git
+[submodule "modules/sourmash"]
+	path = modules/sourmash
+	url = git@github.com:LMSBioinformatics/nf_mod_sourmash.git
