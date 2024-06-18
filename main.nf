@@ -10,6 +10,7 @@ import static groovy.json.JsonOutput.*
 
 include {module_info; find_samples; count_reads} from './modules/utils'
 include {fastqc} from './modules/fastqc'
+include {sourmash_gather} from './modules/sourmash'
 
 // Compile and present help text if requested
 if (params.containsKey('help')) {
@@ -37,5 +38,6 @@ workflow {
             .join(count_reads(samples))
 
     fastqc(samples)
+    sourmash_gather(samples)
 
 }
