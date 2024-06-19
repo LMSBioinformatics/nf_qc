@@ -33,7 +33,7 @@ params._required_arguments
 workflow {
 
     // Scrape the sample names and file paths, determine the sequencing depth
-    samples = find_samples(params.run_dir)
+    samples = find_samples(params.run_dir, params.glob)
     samples =
         samples.join(count_reads(samples).map { [it[0], it[1].toInteger()] })
 
