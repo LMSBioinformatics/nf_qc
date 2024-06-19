@@ -40,8 +40,11 @@ workflow {
     fastqc(samples)
     sourmash_gather(samples)
 
+    // Collect all outputs for multiqc
     qc_and_logs =
         channel.of()
-        .mix(fastqc.out, sourmash.out)
+        .mix(fastqc.out, sourmash_gather.out)
+        .collect()
     multiqc(qc_and_logs)
+
 }
