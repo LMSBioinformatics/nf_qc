@@ -7,3 +7,6 @@
 [submodule "modules/sourmash"]
 	path = modules/sourmash
 	url = git@github.com:LMSBioinformatics/nf_mod_sourmash.git
+[submodule "modules/multiqc"]
+	path = modules/multiqc
+	url = git@github.com:LMSBioinformatics/nf_mod_multiqc.git

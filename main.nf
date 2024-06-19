@@ -11,6 +11,7 @@ import static groovy.json.JsonOutput.*
 include {module_info; find_samples; count_reads} from './modules/utils'
 include {fastqc} from './modules/fastqc'
 include {sourmash_gather} from './modules/sourmash'
+include {multiqc} from './modules/multiqc'
 
 // Compile and present help text if requested
 if (params.containsKey('help')) {
@@ -39,4 +40,8 @@ workflow {
     fastqc(samples)
     sourmash_gather(samples)
 
+    qc_and_logs =
+        channel.of()
+        .mix(fastqc.out, sourmash.out)
+    multiqc(qc_and_logs)
 }
