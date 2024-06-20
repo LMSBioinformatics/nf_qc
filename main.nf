@@ -6,9 +6,8 @@
 -------------------------------------------------------------------------------
 */
 
-import static groovy.json.JsonOutput.*
-
-include {module_info; find_samples; count_reads} from './modules/utils'
+include {module_info; find_samples; get_run_info; count_reads} \
+    from './modules/utils'
 include {fastqc} from './modules/fastqc'
 include {sourmash_gather} from './modules/sourmash'
 include {multiqc} from './modules/multiqc'
@@ -28,12 +27,14 @@ params._required_arguments
         }
     }
 
+// import static groovy.json.JsonOutput.*
 // println prettyPrint(toJson(params))
 
 workflow {
 
+    (run_info, run_dir) = get_run_info(params.run_dir)
     // Scrape the sample names and file paths, determine the sequencing depth
-    samples = find_samples(params.run_dir, params.glob)
+    samples = find_samples(run_dir, params.glob)
     samples =
         samples.join(count_reads(samples).map { [it[0], it[1].toInteger()] })
 
@@ -45,6 +46,6 @@ workflow {
         channel.of()
         .mix(fastqc.out, sourmash_gather.out)
         .collect()
-    multiqc(qc_and_logs)
+    multiqc(qc_and_logs, run_info)
 
 }
