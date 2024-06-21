@@ -10,3 +10,6 @@
 [submodule "modules/multiqc"]
 	path = modules/multiqc
 	url = git@github.com:LMSBioinformatics/nf_mod_multiqc.git
+[submodule "modules/bclconvert"]
+	path = modules/bclconvert
+	url = git@github.com:LMSBioinformatics/nf_mod_bclconvert.git
