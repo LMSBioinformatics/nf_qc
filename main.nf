@@ -6,7 +6,8 @@
 -------------------------------------------------------------------------------
 */
 
-include {module_info; find_samples; get_run_info; count_reads} \
+include {module_info; find_samples; get_run_info; count_reads;
+        count_undetermined} \
     from './modules/utils'
 include {fastqc} from './modules/fastqc'
 include {sourmash_gather} from './modules/sourmash'
@@ -44,6 +45,10 @@ workflow {
             run_info["Demultiplexed reads"] += depth
             [name, depth]
         })
+    // Determine the undetermined sequencing depth
+    run_info["Undetermined reads"] = 0
+    count_undetermined(run_dir)
+        .map { run_info["Undetermined reads"] += it.toInteger() }
 
     fastqc(samples)
     sourmash_gather(samples)
