@@ -46,9 +46,8 @@ workflow {
             [name, depth]
         })
     // Determine the undetermined sequencing depth
-    run_info["Undetermined reads"] = 0
-    count_undetermined(run_dir)
-        .map { run_info["Undetermined reads"] += it.toInteger() }
+    count_undetermined(run_dir).n_undetermined
+        .map { run_info["Undetermined reads"] = it.toInteger() }
 
     fastqc(samples)
     sourmash_gather(samples)
