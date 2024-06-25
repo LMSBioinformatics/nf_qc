@@ -33,10 +33,17 @@ params._required_arguments
 workflow {
 
     (run_info, run_dir) = get_run_info(params.run_dir)
-    // Scrape the sample names and file paths, determine the sequencing depth
+    // Scrape the sample names and file paths,
     samples = find_samples(run_dir, params.glob)
+
+    // Determine the on-target sequencing depth
+    run_info["Demultiplexed reads"] = 0
     samples =
-        samples.join(count_reads(samples).map { [it[0], it[1].toInteger()] })
+        samples.join(count_reads(samples).map { name, depth ->
+            depth = depth.toInteger()
+            run_info["Demultiplexed reads"] += depth
+            [name, depth]
+        })
 
     fastqc(samples)
     sourmash_gather(samples)
