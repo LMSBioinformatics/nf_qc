@@ -37,25 +37,29 @@ workflow {
     // Scrape the sample names and file paths,
     samples = find_samples(run_dir, params.glob)
 
-    // Determine the on-target sequencing depth
-    run_info["Demultiplexed reads"] = 0
-    samples =
-        samples.join(count_reads(samples).map { name, depth ->
-            depth = depth.toInteger()
-            run_info["Demultiplexed reads"] += depth
-            [name, depth]
-        })
     // Determine the undetermined sequencing depth
     count_undetermined(run_dir).n_undetermined
         .map { run_info["Undetermined reads"] = it.toInteger() }
 
+    // QC and count reads
     fastqc(samples)
+    run_info["Demultiplexed reads"] = 0
+    samples =
+        samples.join(
+            fastqc.out.n_reads
+                .map { name, depth ->
+                    depth = depth.toInteger()
+                    run_info["Demultiplexed reads"] += depth
+                    [name, depth]
+                })
+
+    // Contamination screen
     sourmash_gather(samples)
 
     // Collect all outputs for multiqc
     qc_and_logs =
         channel.of()
-        .mix(fastqc.out, sourmash_gather.out)
+        .mix(fastqc.out.files, sourmash_gather.out.files)
         .collect()
     multiqc(qc_and_logs, run_info)
 
