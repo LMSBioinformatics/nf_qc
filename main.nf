@@ -37,17 +37,17 @@ workflow {
 
     // Determine the undetermined sequencing depth
     count_undetermined(run_dir).n_undetermined
-        .map { run_info["Undetermined reads"] = it.toInteger() }
+        .map { run_info["Undetermined reads/pairs"] = it.toInteger() }
 
     // QC and count reads
     fastqc(samples)
-    run_info["Demultiplexed reads"] = 0
+    run_info["Demultiplexed reads/pairs"] = 0
     samples =
         samples.join(
             fastqc.out.n_reads
                 .map { name, depth ->
                     depth = depth.toInteger()
-                    run_info["Demultiplexed reads"] += depth
+                    run_info["Demultiplexed reads/pairs"] += depth
                     [name, depth]
                 })
 
