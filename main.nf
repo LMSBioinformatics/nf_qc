@@ -6,10 +6,8 @@
 -------------------------------------------------------------------------------
 */
 
-include {module_info; find_samples; get_run_info; count_reads;
-        count_undetermined} \
-    from './modules/utils'
-include {fastqc} from './modules/fastqc'
+include {module_info; find_samples; get_run_info} from './modules/utils'
+include {fastqc; count_undetermined} from './modules/fastqc'
 include {sourmash_gather} from './modules/sourmash'
 include {multiqc} from './modules/multiqc'
 
