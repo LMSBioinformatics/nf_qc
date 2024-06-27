@@ -1,12 +1,12 @@
 [submodule "modules/utils"]
 	path = modules/utils
-	url = git@github.com:LMSBioinformatics/nf_mod_utils.git
+	url = https://github.com/LMSBioinformatics/nf_mod_utils.git
 [submodule "modules/fastqc"]
 	path = modules/fastqc
-	url = git@github.com:LMSBioinformatics/nf_mod_fastqc.git
+	url = https://github.com/LMSBioinformatics/nf_mod_fastqc.git
 [submodule "modules/sourmash"]
 	path = modules/sourmash
-	url = git@github.com:LMSBioinformatics/nf_mod_sourmash.git
+	url = https://github.com/LMSBioinformatics/nf_mod_sourmash.git
 [submodule "modules/multiqc"]
 	path = modules/multiqc
-	url = git@github.com:LMSBioinformatics/nf_mod_multiqc.git
+	url = https://github.com/LMSBioinformatics/nf_mod_multiqc.git
