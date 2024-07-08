@@ -32,7 +32,7 @@ params._required_arguments
 workflow {
 
     (run_info, run_dir) = get_run_info(params.run_dir)
-    // Scrape the sample names and file paths,
+    // Scrape the sample names and file paths
     samples = find_samples(run_dir, params.glob)
 
     // Determine the undetermined sequencing depth
@@ -58,9 +58,9 @@ workflow {
     qc_and_logs =
         channel.of()
         .mix(
+            count_undetermined.out.files,
             fastqc.out.files,
-            sourmash_gather.out.files,
-            count_undetermined.out.files)
+            sourmash_gather.out.files)
         .collect()
     multiqc(qc_and_logs, run_info)
 
