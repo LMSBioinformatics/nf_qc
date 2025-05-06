@@ -24,7 +24,7 @@ requires a `--rundir` and an `--outdir` to be specified .
 
 ```bash
 module load nextflow
-nextflow run lmsbioinformatics/nf_qc -r v0.1.7 --run_dir ~/mnt/network/isilon_miseq/Runs/240719_M01823_0626_000000000-DMHVJ --outdir 240719_M01823_0626_000000000-DMHVJ
+nextflow run lmsbioinformatics/nf_qc -r v0.1.9 --run_dir ~/mnt/network/isilon_miseq/Runs/240719_M01823_0626_000000000-DMHVJ --outdir 240719_M01823_0626_000000000-DMHVJ
 ```
 
 ### As a SLURM Job
@@ -32,7 +32,7 @@ nextflow run lmsbioinformatics/nf_qc -r v0.1.7 --run_dir ~/mnt/network/isilon_mi
 The above command can be passed to `sbatch` using `--wrap`:
 
 ```bash
-sbatch --job-name nf_qc --partition ctrl --qos qos_ctrl --ntasks 1 --cpus-per-task 1 --mem 512M --time 06:00:00 --parsable --wrap 'module load nextflow; nextflow run lmsbioinformatics/nf_qc -r v0.1.7 --run_dir ~/mnt/network/isilon_nextseq/Runs/240730_VH00504_220_2223JLLNX --outdir 240730_VH00504_220_2223JLLNX'
+sbatch --job-name nf_qc --partition ctrl --qos qos_ctrl --ntasks 1 --cpus-per-task 1 --mem 512M --time 06:00:00 --parsable --wrap 'module load nextflow; nextflow run lmsbioinformatics/nf_qc -r v0.1.9 --run_dir ~/mnt/network/isilon_nextseq/Runs/240730_VH00504_220_2223JLLNX --outdir 240730_VH00504_220_2223JLLNX'
 ```
 
 ### Tidy Up
